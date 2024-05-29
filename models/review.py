@@ -1,35 +1,18 @@
-
 #!/usr/bin/python3
-"""This module defines the `Review` class, which represents a user review for
-a place in the application.
-
-The `Review` class inherits from the `BaseModel` class and provides data
-validation for review data.
-"""
-
+"""This is the review class"""
+from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship
-
-from os import getenv
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 
 
 class Review(BaseModel, Base):
-    """Represents a user review for a place in the application.
-
+    """This is the class for Review
     Attributes:
-        text (str): The content of the review.
-        place_id (str): The ID of the associated place.
-        user_id (str): The ID of the user who wrote the review.
+        place_id: place id
+        user_id: user id
+        text: review description
     """
-
-    __tablename__ = 'reviews'
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        text = Column(String(1024), nullable=False)
-        place_id = Column(String(60), ForeignKey('places.id'), nullable=True)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=True)
-
-    else:
-        place_id = ""
-        user_id = ""
-        text = ""
+    __tablename__ = "reviews"
+    text = Column(String(1024), nullable=False)
+    place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
+    user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
